@@ -1,7 +1,7 @@
 {
 	"name": "smedia-react-crud",
 	"version": "0.0.2",
-	"description": "Common frontend CRUD components for SorokinMedia",
+	"description": "Common frontend CRUD components for Sorokin Media",
 	"main": "dist/index.js",
 	"repository": {
 		"type": "git",
