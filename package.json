@@ -1,23 +1,23 @@
 {
-	"name": "sm-react-crud",
-	"version": "2.3.39",
-	"description": "Common frontend CRUD components for SM",
+	"name": "smedia-react-crud",
+	"version": "0.0.1",
+	"description": "Common frontend CRUD components for SorokinMedia",
 	"main": "dist/index.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/sorokinmedia/crud.git"
+		"url": "git+https://github.com/magarampage/crud.git"
 	},
 	"keywords": [
 		"react",
 		"components",
 		"crud"
 	],
-	"author": "sorokinmedia",
+	"author": "magarampage",
 	"license": "BSD-3-Clause",
 	"bugs": {
-		"url": "https://github.com/sorokinmedia/crud/issues"
+		"url": "https://github.com/magarampage/crud/issues"
 	},
-	"homepage": "https://github.com/sorokinmedia/crud#readme",
+	"homepage": "https://github.com/magarampage/crud#readme",
 	"peerDependencies": {},
 	"devDependencies": {
 		"@babel/core": "^7.5.5",
