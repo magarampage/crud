@@ -1,94 +1,74 @@
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
-import replace from 'rollup-plugin-replace';
+import babel from 'rollup-plugin-babel'
+import commonjs from 'rollup-plugin-commonjs'
+import resolve from 'rollup-plugin-node-resolve'
+import replace from 'rollup-plugin-replace'
 import postcss from 'rollup-plugin-postcss'
-import json from 'rollup-plugin-json';
-import { uglify } from 'rollup-plugin-uglify'
-import image from 'rollup-plugin-image'
+import { terser } from 'rollup-plugin-terser'
+import filesize from 'rollup-plugin-filesize';
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
-const outputFile = NODE_ENV === 'production' ? './dist/index.js' : './lib/index.js';
+const NODE_ENV = process.env.NODE_ENV || 'development'
+const outputFile = NODE_ENV === 'production' ? './dist/index.js' : './lib/index.js'
 
 export default {
 	input: 'src/index.js',
-	output: {
-		file: outputFile,
-		format: 'cjs',
-	},
+	output: [
+		{
+			file: 'dist/index.js',
+			format: 'es',
+		}
+	],
 	// All the used libs needs to be here
 	external: [
-		'react',
-		'react-proptypes',
 		'antd',
+		'antd-local-icon',
+		'auth0-lock',
+		'classnames',
+		'connected-react-router',
 		'draft-js',
+		'draftjs-to-html',
+		'enzyme',
+		'enzyme-adapter-react-16',
+		'enzyme-to-json',
+		'immutable',
+		'immutable-devtools',
+		'jest-css-modules',
+		'jsdom',
+		'moment',
+		'react',
+		'react-dom',
 		'react-draft-wysiwyg',
-		'react-is'
+		'react-flexbox-grid',
+		'react-redux',
+		'react-router',
+		'react-router-dom',
+		'react-rte',
+		'react-slick',
+		'redux',
+		'redux-form',
+		'redux-thunk',
+		'redux-saga',
+		'styled-components',
+		'redux-mock-store',
+		'regenerator-runtime',
+		'rollup-plugin-image',
+		'rollup-plugin-uglify',
+		'sm-redux-saga-request',
+		'sm-string-helper'
 	],
 	plugins: [
-		postcss({
-			plugins: []
+		resolve(),
+		babel({
+			exclude: '**/node_modules/**',
+			runtimeHelpers: true
 		}),
 		replace({
 			'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
 		}),
-		json(),
-		resolve({
-			jsnext: true,
-			main: true
+		commonjs(),
+		postcss({
+			plugins: []
 		}),
-		babel({
-			exclude: 'node_modules/**',
-			externalHelpers: true
-		}),
-		commonjs({
-			include: 'node_modules/**',
-			namedExports: {
-				'react-dom': ['unstable_batchedUpdates']
-			},
-		}),
-		image(),
-		// commonjs(
-		// 	{
-		// 		// non-CommonJS modules will be ignored, but you can also
-		// 		// specifically include/exclude files
-		// 		include: 'node_modules/!**',  // Default: undefined
-		// 		exclude: [
-		// 			'node_modules/draft-js/!**',
-		// 		],
-		//
-		// 		// search for files other than .js files (must already
-		// 		// be transpiled by a previous plugin!)
-		// 		extensions: ['.js', '.coffee'],  // Default: [ '.js' ]
-		//
-		// 		// if true then uses of `global` won't be dealt with by this plugin
-		// 		ignoreGlobal: true,  // Default: false
-		//
-		// 		// if false then skip sourceMap generation for CommonJS modules
-		// 		sourceMap: true,  // Default: true
-		//
-		// 		// explicitly specify unresolvable named exports
-		// 		// (see below for more details)
-		// 		namedExports: {
-		// 			'react-dom': [
-		// 				'findDOMNode', 'createPortal', 'unstable_renderSubtreeIntoContainer'
-		// 			],
-		// 			'draft-js': [
-		// 				'ContentState', 'EditorState', 'SelectionState',
-		// 				'CompositeDecorator', 'convertToRaw', 'Modifier',
-		// 				'KeyBindingUtil', 'DefaultDraftBlockRenderMap',
-		// 				'getDefaultKeyBinding', 'Editor', 'genKey',
-		// 				'CharacterMetadata', 'ContentBlock', 'convertFromHTML',
-		// 				'BlockMapBuilder', 'DefaultDraftInlineStyle'
-		// 			],
-		// 			'draft-js/lib/DraftOffsetKey': ['decode'],
-		// 			'immutable': ['Map', 'List', 'fromJS', 'OrderedSet', 'Repeat', 'is'],
-		// 			'fbjs/lib/ExecutionEnvironment': ['canUseDOM'],
-		// 			'react-is': [
-		// 				'isElement', 'isValidElementType', 'ForwardRef'
-		// 			]
-		// 		},  // Default: undefined
-		// 	}),
-		uglify(),
-	],
-};
+		terser(),
+		filesize()
+	]
+}
