@@ -1,6 +1,8 @@
+/* eslint-disable no-shadow */
 import regeneratorRuntime from 'regenerator-runtime'
 import { saga } from '../../src/index'
 import { takeEvery, all, put, call } from 'redux-saga/effects'
+import { getCookie } from '../../src/redux/requestSaga'
 import { START, ERROR, SUCCESS } from './constants';
 import { request } from 'sm-redux-saga-request';
 import actions from './actions'
@@ -84,15 +86,15 @@ export const getError = (data, response) => {
 	return ''
 };
 
-const WHO_API = 'http://api.workhard.kosmoz.online';
+const WHO_API = 'https://api.workhard.kosmoz.online';
 
 export function* requestWHOSaga(action) {
 	const {
 		payload, method, url, auth, oldType: type, token_is_active
 	} = action;
 
-	const token = '1225956bbb700e8ab9b629b7a52f7a11';
-	// const token = '1a057e41a979648f466d3327de0962b3';
+	const token = getCookie('auth_token')
+
 	try {
 		yield put({
 			...action,
@@ -102,13 +104,11 @@ export function* requestWHOSaga(action) {
 		const body = payload ? JSON.stringify(payload) : '';
 		const headers = new Headers({ 'Content-Type': 'application/json' });
 		if (auth) headers.set('Authorization', 'Bearer ' + token);
-
 		const params = {
 			method,
 			headers,
 			mode: 'cors'
 		};
-
 		if (body && method !== 'GET') params.body = body;
 
 		const data = yield call(

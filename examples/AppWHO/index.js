@@ -1,34 +1,20 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { CrudFull } from '../../dist';
-import createCommissionFields from './createCategoryFields';
+import { CrudFull } from '../../src';
 
-// commission_list_container
+import React, { useState, useEffect } from 'react'
 
-function CrudCommisionList({ taskType, userTag }) {
-	return (
-		<div className="col-lg-12">
-			<div className="box box-body crud-table checkerReview">
-				<CrudFull
-					crudRead="/v2/arbitrage/test-task/list"
-					modelName="essayReview"
-					size="middle"
-					fixActionColumn
-				/>
-			</div>
+
+const Crud = (props) => (
+	<div className="col-lg-12">
+		<div className="box box-body crud-table checkerReview">
+			<CrudFull
+				crudRead="/v2/admin/test-task-user/list"
+				modelName="essayReview"
+				size="middle"
+				fixActionColumn
+			/>
 		</div>
-	)
-}
+	</div>
+)
 
-const mapState = state => ({
-	taskType: state.crudFilterValues && state.crudFilterValues.crudCommisionList
-		? state.crudFilterValues.crudCommisionList.task_type
-		: [],
-	userTag: state.crudFilterValues && state.crudFilterValues.crudCommisionList
-		? state.crudFilterValues.crudCommisionList.user_tag
-		: [],
-})
-export default connect(
-	mapState,
-	null,
-)(CrudCommisionList)
+
+export default Crud
