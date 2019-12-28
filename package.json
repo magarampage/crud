@@ -78,6 +78,7 @@
 		"release": "npm run build:dev && npm run build:prod",
 		"build:prod": "npm run clean && cross-env NODE_ENV=production rollup -c",
 		"build:dev": "cross-env NODE_ENV=development rollup -c",
+		"deploy": "npm version patch;npm publish;git push;git push --tags",
 		"test": "jest",
 		"test:coverage": "jest --coverage --watchAll",
 		"test:watch": "npm run test -- --watchAll",

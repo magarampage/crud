@@ -11,7 +11,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { compose } from 'redux';
 import { Field, reduxForm, stopSubmit } from 'redux-form';
 import requestMiddleware, { request } from 'sm-redux-saga-request';
-import { buildUrlSearch, buildUrlSearchForArray } from 'sm-string-helper';
+import { buildUrlSearchForArray } from 'sm-string-helper';
 import regeneratorRuntime from 'regenerator-runtime';
 
 function _classCallCheck(instance, Constructor) {
@@ -8200,6 +8200,37 @@ function takeEvery$1(patternOrChannel, worker) {
   return fork.apply(void 0, [takeEvery, patternOrChannel, worker].concat(args));
 }
 
+function getUrlParameters(search) {
+  var query = search || location.search.substr(1);
+  var result = {};
+  if (!query) return result;
+  var preQuery = query.replace('?', '&');
+  preQuery.split('&').forEach(function (part) {
+    var item = part.split('=');
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
+function buildUrlSearch(params) {
+  var start = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  if (!params) return '';
+  var res = Object.keys(params).reduce(function (acc, key) {
+    if (params[key] || params[key] === 0) {
+      if (Array.isArray(params[key])) {
+        var arr = params[key].reduce(function (sum, elem) {
+          return sum + "&".concat(key, "[]=").concat(elem);
+        }, '');
+        return acc + arr;
+      }
+
+      return acc + (!acc ? '' : '&') + "".concat(key, "=").concat(params[key]);
+    }
+
+    return acc;
+  }, '');
+  return res && start ? "?".concat(res) : res ? "&".concat(res) : '';
+}
+
 var createNotification = function createNotification(type, message$$1, description) {
   notification[type]({
     message: message$$1,
@@ -8318,7 +8349,7 @@ var selectColumns = function selectColumns(modelName) {
   };
 };
 function fetchCrudModelsSaga(action) {
-  var payload, _ref, order, order_by, page, modelName, passedUrl, crudParams, url, model, columns, filters, params, paramsArr, paramsStr;
+  var payload, _ref, order, order_by, page, modelName, passedUrl, crudParams, url, model, columns, filters, start, params, paramsArr, paramsStr;
 
   return regeneratorRuntime.wrap(function fetchCrudModelsSaga$(_context2) {
     while (1) {
@@ -8343,30 +8374,35 @@ function fetchCrudModelsSaga(action) {
 
         case 12:
           filters = _context2.sent;
+          start = !Object.keys(getUrlParameters()).length;
           params = payload ? buildUrlSearch(_objectSpread2({}, filters, {
             order: !order ? null : order === 'ascend' ? SORT_ASC : SORT_DESC,
             order_by: order_by,
             page: page
-          })) : '';
+          }), start) : '';
           paramsArr = [params];
-          if (payload.filters) Object.keys(payload.filters).forEach(function (key) {
-            if (payload.filters[key] && payload.filters[key].constructor === Array) {
-              paramsArr.push(buildUrlSearchForArray(payload.filters[key], key));
-            }
-          });
+
+          if (payload.filters) {
+            Object.keys(payload.filters).forEach(function (key) {
+              if (payload.filters[key] && payload.filters[key].constructor === Array) {
+                paramsArr.push(buildUrlSearchForArray(payload.filters[key], key));
+              }
+            });
+          }
+
           paramsStr = paramsArr.reduce(function (acc, e, i) {
             var start = i && !acc && e ? '?' : '';
             var delimiter = acc && e ? '&' : '';
             return acc + start + delimiter + e;
           }, '');
-          _context2.next = 19;
+          _context2.next = 20;
           return put(request(_objectSpread2({}, action, {
             method: 'GET',
             auth: true,
             url: "".concat(url).concat(paramsStr)
           })));
 
-        case 19:
+        case 20:
         case "end":
           return _context2.stop();
       }
