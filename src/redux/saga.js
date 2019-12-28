@@ -2,8 +2,9 @@ import moment from 'moment'
 import { stopSubmit } from 'redux-form';
 import { all, fork, put, select, takeEvery, call } from 'redux-saga/effects';
 import requestMiddleware, { request } from 'sm-redux-saga-request'
-import { buildUrlSearch, buildUrlSearchForArray } from 'sm-string-helper'
-import {ERROR, SORT_ASC, SORT_DESC, START, SUCCESS, SUCCESS_REQ} from '../constants';
+import { buildUrlSearchForArray } from 'sm-string-helper'
+import { ERROR, SORT_ASC, SORT_DESC, START, SUCCESS, SUCCESS_REQ } from '../constants';
+import { buildUrlSearch, getUrlParameters } from '../helpers/urlHelpers'
 import notification from '../notification';
 import actions from './actions';
 import regeneratorRuntime from 'regenerator-runtime'
@@ -22,12 +23,14 @@ function isDateColumn(columns, key) {
 
 function getFiltersValues(filters, columns) {
 
-	const res = Object.keys(filters).reduce((acc, key) => ({
-		...acc,
-		[key]: isDateColumn(columns, key) ? (filters[key] instanceof Array || null) ? null : moment(filters[key]).unix()
-			: filters[key].constructor !== Array ? filters[key]
-				: null
-	}), {});
+	const res = Object.keys(filters)
+		.reduce((acc, key) => ({
+			...acc,
+			[key]: isDateColumn(columns, key) ? (filters[key] instanceof Array || null) ? null : moment(filters[key])
+					.unix()
+				: filters[key].constructor !== Array ? filters[key]
+					: null
+		}), {});
 	// buildUrlSearchForArray(filters[key], key)
 
 	return res;
@@ -48,22 +51,27 @@ export function* fetchCrudModelsSaga(action) {
 
 	const columns = model && model.data ? model.data.columns : [];
 	const filters = yield getFiltersValues(payload.filters || {}, columns);
+	const start = !Object.keys(getUrlParameters()).length
 
-	const params = payload ? buildUrlSearch({
-		...filters,
-		order: !order ? null : order === 'ascend' ? SORT_ASC : SORT_DESC,
-		order_by,
-		page
+	const params = payload
+		? buildUrlSearch({
+			...filters,
+			order: !order ? null : order === 'ascend' ? SORT_ASC : SORT_DESC,
+			order_by,
+			page
 
-	}) : '';
+		}, start) : '';
 
 	const paramsArr = [params];
 
-	if (payload.filters) Object.keys(payload.filters).forEach((key) => {
-		if (payload.filters[key] && payload.filters[key].constructor === Array) {
-			paramsArr.push(buildUrlSearchForArray(payload.filters[key], key))
-		}
-	});
+	if (payload.filters) {
+		Object.keys(payload.filters)
+			.forEach((key) => {
+				if (payload.filters[key] && payload.filters[key].constructor === Array) {
+					paramsArr.push(buildUrlSearchForArray(payload.filters[key], key))
+				}
+			});
+	}
 
 	const paramsStr = paramsArr.reduce((acc, e, i) => {
 		const start = i && !acc && e ? '?' : '';
@@ -135,7 +143,10 @@ function* filesUpload(modelName, filesStore) {
 			console.log(res);
 
 			if (filesResp.status !== 200) {
-				yield notifySaga({ error: { message: 'Ошибка при загрузке файла' }, response: {} });
+				yield notifySaga({
+					error: { message: 'Ошибка при загрузке файла' },
+					response: {}
+				});
 				console.log(res)
 			}
 
@@ -154,7 +165,10 @@ export function* getHandledFiles(modelName) {
 	const filesStore = yield select(state => state.uploaderFiles);
 	const files = yield filesUpload(modelName, filesStore);
 
-	return files.map(f => ({ ...f, id: f.id || f.uid }))
+	return files.map(f => ({
+		...f,
+		id: f.id || f.uid
+	}))
 }
 
 export function* createModelSaga(action) {

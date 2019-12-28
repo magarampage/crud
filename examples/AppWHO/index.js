@@ -1,21 +1,25 @@
 import { CrudFull } from '../../src';
 
 import React, { useState, useEffect } from 'react'
+import { getUrlParameters } from '../../src/helpers/urlHelpers'
 
 
-const Crud = (props) => (
+const Crud = (props) => {
 
-	<div className="col-lg-12">
-		<div className="box box-body crud-table checkerReview">
+	const { doer_id = false } = getUrlParameters()
+	const doerQuery = doer_id ? '?doer_id=' + doer_id : ''
+	return (
+		<div className="box box-body crud-table">
 			<CrudFull
-				crudRead="/v2/admin/test-task-user/list"
-				modelName="essayReview"
-				size="middle"
-				fixActionColumn
+				crudRead={`/v2/admin/karma-doer/list${doerQuery}`}
+				modelName="KarmaList"
+				createDisabled
+				// createButtonTitleId={"sidebar.contractor.work.new"}
+
 			/>
 		</div>
-	</div>
-)
+	)
+}
 
 
 export default Crud
