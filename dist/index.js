@@ -1,18 +1,26 @@
-import React, { PureComponent, Component, Fragment, useState, useEffect } from 'react';
-import { Select, Input, Button, Checkbox, DatePicker, Icon, Spin, Table, message, Upload, Form, Modal, Col, Row, Typography, notification } from 'antd';
-import moment from 'moment';
-import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { ContentState, EditorState, convertToRaw, convertFromHTML } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import { Editor } from 'react-draft-wysiwyg';
-import { compose } from 'redux';
-import { Field, reduxForm, stopSubmit } from 'redux-form';
-import requestMiddleware, { request } from 'sm-redux-saga-request';
-import { buildUrlSearchForArray } from 'sm-string-helper';
-import regeneratorRuntime from 'regenerator-runtime';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var React = require('react');
+var React__default = _interopDefault(React);
+var antd = require('antd');
+var moment = _interopDefault(require('moment'));
+var reactRedux = require('react-redux');
+var connectedReactRouter = require('connected-react-router');
+var styled = _interopDefault(require('styled-components'));
+var reactRouterDom = require('react-router-dom');
+var draftJs = require('draft-js');
+var draftToHtml = _interopDefault(require('draftjs-to-html'));
+var reactDraftWysiwyg = require('react-draft-wysiwyg');
+var redux = require('redux');
+var reduxForm = require('redux-form');
+var requestMiddleware = require('sm-redux-saga-request');
+var requestMiddleware__default = _interopDefault(requestMiddleware);
+var smStringHelper = require('sm-string-helper');
+var regeneratorRuntime = _interopDefault(require('regenerator-runtime'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -5328,7 +5336,7 @@ function (_PureComponent) {
           endIndex = _this$state.endIndex,
           allHeight = _this$state.allHeight; // 截取 Select 下拉列表中需要显示的部分
 
-      var cloneMenu = React.cloneElement(menu, {
+      var cloneMenu = React__default.cloneElement(menu, {
         menuItems: menu.props.menuItems.slice(startIndex, endIndex).map(function (item, i) {
           var realIndex = (startIndex || 0) + Number(i);
 
@@ -5339,7 +5347,7 @@ function (_PureComponent) {
             delete style.height;
           }
 
-          return React.cloneElement(item, {
+          return React__default.cloneElement(item, {
             style: _objectSpread2({}, item.style, {}, style)
           });
         }),
@@ -5354,7 +5362,7 @@ function (_PureComponent) {
   }]);
 
   return DropDownWrap;
-}(PureComponent);
+}(React.PureComponent);
 
 var ITEM_ELEMENT_NUMBER = 30; // Select size 配置
 
@@ -5712,7 +5720,7 @@ function (_PureComponent) {
       }
 
       optionLabelProp = optionLabelProp || 'children';
-      return React.createElement(Select, _extends({}, _props, {
+      return React__default.createElement(antd.Select, _extends({}, _props, {
         id: this.id,
         onSearch: this.onSearch,
         onChange: this.onChange,
@@ -5725,7 +5733,7 @@ function (_PureComponent) {
           return _this4.select = ele;
         },
         dropdownRender: function dropdownRender(menu) {
-          return React.createElement(DropDownWrap, _extends({
+          return React__default.createElement(DropDownWrap, _extends({
             startIndex: startIndex,
             endIndex: endIndex,
             allHeight: _this4.allHeight,
@@ -5742,13 +5750,13 @@ function (_PureComponent) {
   }]);
 
   return SuperSelect;
-}(PureComponent);
+}(React.PureComponent);
 
-var Option = Select.Option;
+var Option = antd.Select.Option;
 var children = [];
 
 for (var i = 0; i < 10000; i++) {
-  children.push(React.createElement(Option, {
+  children.push(React__default.createElement(Option, {
     value: i + 'aa',
     key: i
   }, i));
@@ -5761,11 +5769,11 @@ function Index(_ref) {
       selectedKeys = data.selectedKeys,
       confirm = data.confirm,
       clearFilters = data.clearFilters;
-  return React.createElement("div", {
+  return React__default.createElement("div", {
     style: {
       width: '300px'
     }
-  }, React.createElement(SuperSelect, {
+  }, React__default.createElement(SuperSelect, {
     value: selectedKeys,
     placeholder: "\u0412\u044B\u0431\u0440\u0430\u0442\u044C" // onChange={(e) => {
     // 	setSelectedKeys(e);
@@ -5785,7 +5793,7 @@ function Index(_ref) {
     },
     onSearch: function onSearch() {}
   }, options.map(function (opt) {
-    return React.createElement(Select.Option, {
+    return React__default.createElement(antd.Select.Option, {
       value: opt.value,
       key: opt.value,
       onClick: function onClick(e) {
@@ -5835,16 +5843,16 @@ Index.propTypes = {
   isVisible: propTypes.bool
 };
 
-var Option$1 = Select.Option;
+var Option$1 = antd.Select.Option;
 var filterDropdown = (function (name, type, options) {
   return function (props) {
     var setSelectedKeys = props.setSelectedKeys,
         selectedKeys = props.selectedKeys,
         confirm = props.confirm,
         clearFilters = props.clearFilters;
-    return React.createElement("div", {
+    return React__default.createElement("div", {
       className: "custom-filter-dropdown"
-    }, type === 'checkbox' ? React.createElement("span", null, React.createElement(Checkbox, {
+    }, type === 'checkbox' ? React__default.createElement("span", null, React__default.createElement(antd.Checkbox, {
       value: selectedKeys,
       onChange: function onChange(e) {
         return setSelectedKeys(e.target.checked.toString());
@@ -5852,10 +5860,10 @@ var filterDropdown = (function (name, type, options) {
       onPressEnter: function onPressEnter() {
         confirm();
       }
-    }), React.createElement("br", null)) : type === 'select' ? React.createElement(Index, {
+    }), React__default.createElement("br", null)) : type === 'select' ? React__default.createElement(Index, {
       options: options,
       data: props
-    }) : type === 'date' ? React.createElement(DatePicker, {
+    }) : type === 'date' ? React__default.createElement(antd.DatePicker, {
       value: selectedKeys && !(selectedKeys instanceof Array) ? moment(selectedKeys, 'DD/MM/YYYY').locale('ru') : null,
       onChange: function onChange(value) {
         return setSelectedKeys(value);
@@ -5868,7 +5876,7 @@ var filterDropdown = (function (name, type, options) {
       style: {
         marginRight: '8px'
       }
-    }) : React.createElement(Input, {
+    }) : React__default.createElement(antd.Input, {
       type: type,
       placeholder: "\u041F\u043E\u0438\u0441\u043A",
       value: selectedKeys,
@@ -5878,12 +5886,12 @@ var filterDropdown = (function (name, type, options) {
       onPressEnter: function onPressEnter() {
         confirm();
       }
-    }), React.createElement(Button, {
+    }), React__default.createElement(antd.Button, {
       type: "primary",
       onClick: function onClick() {
         confirm();
       }
-    }, "\u041F\u043E\u0438\u0441\u043A"), React.createElement(Button, {
+    }, "\u041F\u043E\u0438\u0441\u043A"), React__default.createElement(antd.Button, {
       onClick: function onClick() {
         clearFilters();
       }
@@ -6019,20 +6027,20 @@ function (_Component) {
       var _this$props2 = this.props,
           data = _this$props2.data,
           row = _this$props2.row;
-      return React.createElement(ActionStyled, null, React.createElement("a", {
+      return React__default.createElement(ActionStyled, null, React__default.createElement("a", {
         title: data.name,
         href: data.url,
         target: "_blank",
         className: "crud-action",
         onClick: this.handleClick
-      }, React.createElement(Icon, {
+      }, React__default.createElement(antd.Icon, {
         type: this.getIcon(data.id) || data.icon
       })));
     }
   }]);
 
   return Action;
-}(Component);
+}(React.Component);
 
 Action.propTypes = {
   data: propTypes.object.isRequired,
@@ -6044,30 +6052,30 @@ Action.propTypes = {
 Action.defaultProps = {
   iconTheme: 'outlined'
 };
-var Action$1 = connect(function (state, props) {
+var Action$1 = reactRedux.connect(function (state, props) {
   return {
     actionsFunc: state.crudActionsFunc[props.modelName],
     params: state.crudParams[props.modelName]
   };
 }, {
-  push: push
+  push: connectedReactRouter.push
 })(Action);
 
 var DateCell = function DateCell(data) {
-  return React.createElement("p", null, moment(data).format('DD.MM.YYYY'));
+  return React__default.createElement("p", null, moment(data).format('DD.MM.YYYY'));
 };
 
 var TextCell = function TextCell(text) {
-  return React.createElement("span", null, text);
+  return React__default.createElement("span", null, text);
 };
 
 var BooleanCell = function BooleanCell(value) {
-  return React.createElement("span", null, value ? React.createElement(Icon, {
+  return React__default.createElement("span", null, value ? React__default.createElement(antd.Icon, {
     type: "check",
     style: {
       color: 'green'
     }
-  }) : React.createElement(Icon, {
+  }) : React__default.createElement(antd.Icon, {
     type: "close",
     style: {
       color: 'red'
@@ -6077,12 +6085,12 @@ var BooleanCell = function BooleanCell(value) {
 
 var ArrTextCell = function ArrTextCell(arr) {
   return arr.map(function (elem) {
-    return React.createElement("p", null, elem);
+    return React__default.createElement("p", null, elem);
   });
 };
 
 var HtmlCell = function HtmlCell(html) {
-  return React.createElement("span", {
+  return React__default.createElement("span", {
     dangerouslySetInnerHTML: {
       __html: html
     }
@@ -6091,7 +6099,7 @@ var HtmlCell = function HtmlCell(html) {
 
 var ActionsCell = function ActionsCell(row, modelName, iconTheme) {
   return row.actions.map(function (action) {
-    return React.createElement(Action$1, {
+    return React__default.createElement(Action$1, {
       data: action,
       row: row,
       key: action.id,
@@ -6112,11 +6120,11 @@ var ArrObjectCell = function ArrObjectCell(obj) {
 
     var restValues = rest ? Object.values(rest) : false;
     var restAttributes = restValues ? restValues.map(function (el, i) {
-      return React.createElement("span", {
+      return React__default.createElement("span", {
         key: i
       }, el);
     }) : '';
-    return React.createElement(Fragment, null, React.createElement("p", null, created_at ? moment.unix(created_at).format('DD.MM.YYYY') : '', " ", updated_at ? moment.unix(updated_at).format('DD.MM.YYYY') : '', " ", restAttributes), React.createElement("br", null));
+    return React__default.createElement(React.Fragment, null, React__default.createElement("p", null, created_at ? moment.unix(created_at).format('DD.MM.YYYY') : '', " ", updated_at ? moment.unix(updated_at).format('DD.MM.YYYY') : '', " ", restAttributes), React__default.createElement("br", null));
   });
 };
 
@@ -6143,28 +6151,28 @@ var ArrayCell = function ArrayCell(_ref2) {
       viewLimit = _ref2.viewLimit;
   if (!Array.isArray(values) || !values.length) return null;
   var handledValues = values.map(function (value, index) {
-    return React.createElement("span", {
+    return React__default.createElement("span", {
       style: isHtml && style ? style : null,
       key: index + Date.now()
-    }, isHtml ? React.createElement("span", {
+    }, isHtml ? React__default.createElement("span", {
       dangerouslySetInnerHTML: {
         __html: value
       }
     }) : '', !isHtml && renderer(value, type, dateFormat), index < values.length - 1 && delimiter);
   });
-  return React.createElement(ArrayCellLimit, {
+  return React__default.createElement(ArrayCellLimit, {
     values: handledValues,
     viewLimit: viewLimit
   });
 };
 
 var ArrayCellLimit = function ArrayCellLimit(props) {
-  var _useState = useState(!props.viewLimit),
+  var _useState = React.useState(!props.viewLimit),
       _useState2 = _slicedToArray(_useState, 2),
       showAll = _useState2[0],
       setShowAll = _useState2[1];
 
-  return showAll ? props.values : React.createElement("div", null, props.values.slice(0, props.viewLimit), setShowAll ? React.createElement("a", {
+  return showAll ? props.values : React__default.createElement("div", null, props.values.slice(0, props.viewLimit), setShowAll ? React__default.createElement("a", {
     onClick: function onClick() {
       return setShowAll(true);
     }
@@ -6196,13 +6204,13 @@ var dataRenderer = (function (row, column, modelName, iconTheme) {
 
     case 'link':
       var link = row[column.id];
-      if (link.url && link.name) return React.createElement(Link, {
+      if (link.url && link.name) return React__default.createElement(reactRouterDom.Link, {
         to: link.url
       }, link.name);
       var actionView = row.actions.find(function (e) {
         return e.id === 'view';
       });
-      return actionView && actionView.url ? React.createElement(Link, {
+      return actionView && actionView.url ? React__default.createElement(reactRouterDom.Link, {
         to: actionView.url
       }, row[column.id]) : TextCell(row[column.id]);
 
@@ -6217,7 +6225,7 @@ var dataRenderer = (function (row, column, modelName, iconTheme) {
   }
 });
 
-var antIcon = React.createElement(Icon, {
+var antIcon = React__default.createElement(antd.Icon, {
   type: "loading",
   style: {
     fontSize: 36
@@ -6226,14 +6234,14 @@ var antIcon = React.createElement(Icon, {
 });
 
 var Loader = function Loader() {
-  return React.createElement("div", {
+  return React__default.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       width: '100%'
     }
-  }, React.createElement(Spin //indicator={antIcon}
+  }, React__default.createElement(antd.Spin //indicator={antIcon}
   , null));
 };
 
@@ -6326,7 +6334,7 @@ function (_Component) {
           pageSize = _this$props2.pageSize,
           rowSelection = _this$props2.rowSelection,
           bordered = _this$props2.bordered;
-      if (items && !items.data && items.loading) return React.createElement(Loader, null);
+      if (items && !items.data && items.loading) return React__default.createElement(Loader, null);
       if (!items || !items.data) return null;
       var listItems = items.data.items.map(function (elem) {
         return _objectSpread2({}, elem, {
@@ -6348,7 +6356,7 @@ function (_Component) {
           },
           filters: _this2.getFilterValues(col),
           filterIcon: col.filter.can ? function (filtered) {
-            return React.createElement(Icon, {
+            return React__default.createElement(antd.Icon, {
               type: "filter",
               style: {
                 color: filtered ? '#108ee9' : '#aaa'
@@ -6361,8 +6369,8 @@ function (_Component) {
 
         };
       });
-      var TableComponent = TableWrapper || Table;
-      return React.createElement(TableComponent, {
+      var TableComponent = TableWrapper || antd.Table;
+      return React__default.createElement(TableComponent, {
         columns: columns,
         dataSource: listItems,
         className: "isoSortingTable",
@@ -6390,7 +6398,7 @@ function (_Component) {
   }]);
 
   return CrudView;
-}(Component);
+}(React.Component);
 
 CrudView.propTypes = {
   modelName: propTypes.string.isRequired,
@@ -6409,7 +6417,7 @@ CrudView.defaultProps = {
   scrollX: 1300,
   pageSize: 20
 };
-var CrudView$1 = connect(function (state, props) {
+var CrudView$1 = reactRedux.connect(function (state, props) {
   return {
     items: state.crudModels[props.modelName],
     filterValues: state.crudFilterValues[props.modelName],
@@ -6468,11 +6476,11 @@ function (_Component) {
         editorState: editorState
       });
 
-      _this.props.input.onChange(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+      _this.props.input.onChange(draftToHtml(draftJs.convertToRaw(editorState.getCurrentContent())));
     });
 
     _this.state = {
-      editorState: props.input && props.input.value ? EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(props.input.value))) : EditorState.createEmpty()
+      editorState: props.input && props.input.value ? draftJs.EditorState.createWithContent(draftJs.ContentState.createFromBlockArray(draftJs.convertFromHTML(props.input.value))) : draftJs.EditorState.createEmpty()
     };
     return _this;
   }
@@ -6481,7 +6489,7 @@ function (_Component) {
     key: "render",
     value: function render() {
       var editorState = this.state.editorState;
-      return React.createElement(Editor, {
+      return React__default.createElement(reactDraftWysiwyg.Editor, {
         defaultContentState: "defaultContentState",
         initialEditorState: "initialEditorState",
         defaultEditorState: "defaultEditorState",
@@ -6507,7 +6515,7 @@ function (_Component) {
   }]);
 
   return DraftEditor;
-}(Component);
+}(React.Component);
 
 DraftEditor.propTypes = {
   input: propTypes.object,
@@ -6547,16 +6555,16 @@ function UploaderFilePreview(props) {
     return e.uid === preview;
   });
   var url = file.url || window.URL.createObjectURL(file);
-  return React.createElement("div", {
+  return React__default.createElement("div", {
     style: layoutStyle,
     onClick: function onClick() {
       return setPreview(null);
     }
-  }, React.createElement("a", {
+  }, React__default.createElement("a", {
     style: closeIconStyle
-  }, React.createElement(Icon, {
+  }, React__default.createElement(antd.Icon, {
     type: 'close'
-  })), React.createElement("img", {
+  })), React__default.createElement("img", {
     src: url,
     style: imgStyle
   }));
@@ -6617,12 +6625,12 @@ var UploadDecorator = function UploadDecorator(UploaderComponent) {
             var isMax = fileListStored.length === (config.maxFiles || 100);
 
             if (file.size > (config.maxSize || 10000000)) {
-              message.error('Ошибка загрузки, файл превышает допустимый размер');
+              antd.message.error('Ошибка загрузки, файл превышает допустимый размер');
               return false;
             }
 
             if (multiple && isMax) {
-              message.error('Ошибка загрузки, превышено допустимое количество загружаемых файлов');
+              antd.message.error('Ошибка загрузки, превышено допустимое количество загружаемых файлов');
               return false;
             }
 
@@ -6652,7 +6660,7 @@ var UploadDecorator = function UploadDecorator(UploaderComponent) {
           listType: listType,
           buttonText: buttonText
         };
-        return React.createElement("div", null, React.createElement(UploaderComponent, uploaderProps), React.createElement(UploaderFilePreview, {
+        return React__default.createElement("div", null, React__default.createElement(UploaderComponent, uploaderProps), React__default.createElement(UploaderFilePreview, {
           setPreview: this.setPreview,
           preview: preview,
           files: fileListStored
@@ -6661,7 +6669,7 @@ var UploadDecorator = function UploadDecorator(UploaderComponent) {
     }]);
 
     return Uploader;
-  }(Component), _temp;
+  }(React.Component), _temp;
 };
 
 UploadDecorator.propTypes = {
@@ -6684,14 +6692,14 @@ var mapStateToProps = function mapStateToProps(state, props) {
   };
 };
 
-var UploadDecorator$1 = compose(connect(mapStateToProps, {
+var UploadDecorator$1 = redux.compose(reactRedux.connect(mapStateToProps, {
   setUploaderDefaultFileList: setUploaderDefaultFileList
 }), UploadDecorator);
 
 function Uploader(props) {
-  return React.createElement(Upload, props, React.createElement(Button, {
+  return React__default.createElement(antd.Upload, props, React__default.createElement(antd.Button, {
     type: 'default'
-  }, React.createElement(Icon, {
+  }, React__default.createElement(antd.Icon, {
     type: "upload"
   }), " ", props.buttonText));
 }
@@ -6710,7 +6718,7 @@ var setUploaderFiles = actions.setUploaderFiles,
     fetchFileConfig = actions.fetchFileConfig;
 
 function CrudUploader(props) {
-  useEffect(function () {
+  React.useEffect(function () {
     props.setUploaderFiles(props.defaultFileList, props.modelName);
     props.fetchFileConfig(props.crudParams[props.modelName].crudCreate + '/config', props.modelName);
     return function () {
@@ -6718,7 +6726,7 @@ function CrudUploader(props) {
     };
   }, []);
   console.log(props.config[props.modelName]);
-  return React.createElement(Uploader$1, _extends({}, props, {
+  return React__default.createElement(Uploader$1, _extends({}, props, {
     config: props.config[props.modelName] && props.config[props.modelName].data ? props.config[props.modelName].data.files.config : {},
     onChange: function onChange(files) {
       return props.setUploaderFiles(files, props.modelName);
@@ -6734,7 +6742,7 @@ CrudUploader.propTypes = {
   fetchFileConfig: propTypes.func.isRequired,
   defaultFileList: propTypes.array
 };
-var Uploader$2 = connect(function (state, props) {
+var Uploader$2 = reactRedux.connect(function (state, props) {
   return {
     modelName: state.isOpenModelModal || props.modelName,
     crudParams: state.crudParams,
@@ -6746,8 +6754,8 @@ var Uploader$2 = connect(function (state, props) {
   fetchFileConfig: fetchFileConfig
 })(CrudUploader);
 
-var SelectOption = Select.Option;
-var Search = Input.Search;
+var SelectOption = antd.Select.Option;
+var Search = antd.Input.Search;
 var renderField = function renderField(_ref) {
   var input = _ref.input,
       label = _ref.label,
@@ -6773,7 +6781,7 @@ var renderField = function renderField(_ref) {
       dropdownRender = _ref.dropdownRender,
       uploaderParams = _ref.uploaderParams,
       locale = _ref.locale;
-  return React.createElement(Form.Item, _extends({
+  return React__default.createElement(antd.Form.Item, _extends({
     hasFeedback: true
   }, layout, {
     label: label,
@@ -6782,7 +6790,7 @@ var renderField = function renderField(_ref) {
   }), function () {
     switch (type) {
       case 'select':
-        return React.createElement(Select, _extends({}, input, {
+        return React__default.createElement(antd.Select, _extends({}, input, {
           value: input.value || [],
           mode: mode,
           showSearch: true,
@@ -6794,14 +6802,14 @@ var renderField = function renderField(_ref) {
           placeholder: placeholder,
           dropdownRender: dropdownRender
         }), options.map(function (elem) {
-          return React.createElement(SelectOption, {
+          return React__default.createElement(SelectOption, {
             value: elem.id,
             key: elem.id
           }, elem.name);
         }));
 
       case 'textarea':
-        return React.createElement(Input.TextArea, _extends({}, input, {
+        return React__default.createElement(antd.Input.TextArea, _extends({}, input, {
           placeholder: placeholder,
           type: type,
           className: "form-control",
@@ -6809,10 +6817,10 @@ var renderField = function renderField(_ref) {
         }));
 
       case 'checkbox':
-        return React.createElement(Checkbox, input, placeholder);
+        return React__default.createElement(antd.Checkbox, input, placeholder);
 
       case 'search':
-        return React.createElement(Search, _extends({
+        return React__default.createElement(Search, _extends({
           onPressEnter: onPressEnter
         }, input, {
           value: input.value || defaultValue,
@@ -6821,7 +6829,7 @@ var renderField = function renderField(_ref) {
         }));
 
       case 'date':
-        return React.createElement(DatePicker, _extends({
+        return React__default.createElement(antd.DatePicker, _extends({
           style: {
             width: '100%'
           },
@@ -6835,18 +6843,18 @@ var renderField = function renderField(_ref) {
         }));
 
       case 'editor':
-        return React.createElement(Field, {
+        return React__default.createElement(reduxForm.Field, {
           name: input.name,
           component: DraftEditor
         });
 
       case 'uploader':
-        return React.createElement(Uploader$2, _extends({}, uploaderParams, {
+        return React__default.createElement(Uploader$2, _extends({}, uploaderParams, {
           defaultFileList: input.value
         }));
 
       default:
-        return React.createElement(Input, _extends({
+        return React__default.createElement(antd.Input, _extends({
           onPressEnter: onPressEnter
         }, input, {
           value: input.value || defaultValue,
@@ -6893,9 +6901,9 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "mapFields", function (fields) {
       return fields.map(function (props) {
-        return props.fields ? React.createElement("div", {
+        return props.fields ? React__default.createElement("div", {
           key: props.name
-        }, _this.mapFields(props.fields)) : React.createElement(Field, _extends({}, props, {
+        }, _this.mapFields(props.fields)) : React__default.createElement(reduxForm.Field, _extends({}, props, {
           component: props.component || _this.props.renderField,
           key: props.name,
           options: _this.props.options[props.optionsKey] || props.options || []
@@ -6918,7 +6926,7 @@ function (_Component) {
           titleEdit = _this$props.titleEdit,
           fields = _this$props.fields,
           crudCreateModalLoading = _this$props.crudCreateModalLoading;
-      return React.createElement(Modal, {
+      return React__default.createElement(antd.Modal, {
         title: modalType === 'edit' ? titleEdit : title,
         visible: true,
         onCancel: this.handleCancel,
@@ -6926,14 +6934,14 @@ function (_Component) {
         confirmLoading: crudCreateModalLoading,
         onOk: this.props.handleSubmit(this.handleSubmit),
         okText: modalType === 'edit' ? 'Сохранить' : 'Создать'
-      }, React.createElement("form", {
+      }, React__default.createElement("form", {
         onSubmit: this.props.handleSubmit(this.handleSubmit)
       }, this.mapFields(fields)));
     }
   }]);
 
   return CreateModalForm;
-}(Component);
+}(React.Component);
 
 _defineProperty(CreateModalForm, "propTypes", {
   modalType: propTypes.string,
@@ -6951,7 +6959,7 @@ _defineProperty(CreateModalForm, "defaultProps", {
   renderField: renderField
 });
 
-CreateModalForm = reduxForm({
+CreateModalForm = reduxForm.reduxForm({
   form: 'createModel',
   validate: function validate(values, props) {
     var errors = {}; // if(!values.name) errors.name = 'Введите название';
@@ -6963,7 +6971,7 @@ CreateModalForm = reduxForm({
   } // initialValues comes from outside
 
 })(CreateModalForm);
-CreateModalForm = connect(function (state, props) {
+CreateModalForm = reactRedux.connect(function (state, props) {
   var options = props.fields.reduce(function (acc, field) {
     if (state[field.optionsKey]) {
       acc[field.optionsKey] = state[field.optionsKey].data;
@@ -7006,9 +7014,9 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "mapFields", function (fields) {
       return fields.map(function (props) {
-        return props.fields ? React.createElement("div", {
+        return props.fields ? React__default.createElement("div", {
           key: props.name
-        }, _this.mapFields(props.fields)) : React.createElement(Field, _extends({}, props, {
+        }, _this.mapFields(props.fields)) : React__default.createElement(reduxForm.Field, _extends({}, props, {
           component: props.component || _this.props.renderField,
           key: props.name,
           options: _this.props.options[props.optionsKey] || props.options || []
@@ -7030,31 +7038,31 @@ function (_Component) {
           title = _this$props.title,
           titleEdit = _this$props.titleEdit,
           fields = _this$props.fields;
-      var Title = Typography.Title;
-      return React.createElement(Row, {
+      var Title = antd.Typography.Title;
+      return React__default.createElement(antd.Row, {
         align: "middle",
         justify: "space-between"
-      }, React.createElement(Col, {
+      }, React__default.createElement(antd.Col, {
         span: 20
-      }, React.createElement(Button, {
+      }, React__default.createElement(antd.Button, {
         size: "small",
         type: "primary",
         ghost: true,
         onClick: this.handleCancel
-      }, "\u041D\u0430\u0437\u0430\u0434"), React.createElement(Title, {
+      }, "\u041D\u0430\u0437\u0430\u0434"), React__default.createElement(Title, {
         level: 2
-      }, type === 'edit' ? titleEdit : title), React.createElement("form", {
+      }, type === 'edit' ? titleEdit : title), React__default.createElement("form", {
         onSubmit: this.props.handleSubmit(this.handleSubmit)
-      }, this.mapFields(fields))), React.createElement(Col, {
+      }, this.mapFields(fields))), React__default.createElement(antd.Col, {
         span: 20,
         style: {
           textAlign: 'right'
         }
-      }, React.createElement(Button, {
+      }, React__default.createElement(antd.Button, {
         type: "primary",
         htmlType: "submit",
         onClick: this.props.handleSubmit(this.handleSubmit)
-      }, "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C"), React.createElement(Button, {
+      }, "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C"), React__default.createElement(antd.Button, {
         style: {
           marginLeft: 8
         },
@@ -7064,7 +7072,7 @@ function (_Component) {
   }]);
 
   return CreateViewForm;
-}(Component);
+}(React.Component);
 
 _defineProperty(CreateViewForm, "propTypes", {
   modalType: propTypes.string,
@@ -7085,7 +7093,7 @@ CreateViewForm.propTypes = {
   options: propTypes.object,
   handleSubmit: propTypes.func
 };
-CreateViewForm = reduxForm({
+CreateViewForm = reduxForm.reduxForm({
   form: 'createModel',
   validate: function validate(values, props) {
     var errors = {}; // if(!values.name) errors.name = 'Введите название';
@@ -7096,7 +7104,7 @@ CreateViewForm = reduxForm({
     return errors;
   }
 })(CreateViewForm);
-CreateViewForm = connect(function (state, props) {
+CreateViewForm = reactRedux.connect(function (state, props) {
   var options = props.fields.reduce(function (acc, field) {
     if (state[field.optionsKey]) {
       acc[field.optionsKey] = state[field.optionsKey].data;
@@ -7140,11 +7148,11 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "mapFields", function (fields) {
       if (fields.length) {
         return fields.map(function (elem) {
-          return React.createElement(Form, {
+          return React__default.createElement(antd.Form, {
             key: elem.name
-          }, React.createElement(Form.Item, {
+          }, React__default.createElement(antd.Form.Item, {
             label: elem.placeholder
-          }, React.createElement(Input, {
+          }, React__default.createElement(antd.Input, {
             type: "text",
             disabled: true,
             value: _this.props.initialValues[elem.name]
@@ -7165,20 +7173,20 @@ function (_Component) {
     key: "render",
     value: function render() {
       var fields = this.props.fields;
-      var Title = Typography.Title;
-      return React.createElement(Row, {
+      var Title = antd.Typography.Title;
+      return React__default.createElement(antd.Row, {
         align: "middle",
         justify: "space-between"
-      }, React.createElement(Col, {
+      }, React__default.createElement(antd.Col, {
         span: 20
-      }, React.createElement(Title, {
+      }, React__default.createElement(Title, {
         level: 2
-      }, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0430\u043B\u0435\u0440\u0442\u0430"), this.mapFields(fields)), React.createElement(Col, {
+      }, "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440 \u0430\u043B\u0435\u0440\u0442\u0430"), this.mapFields(fields)), React__default.createElement(antd.Col, {
         span: 20,
         style: {
           textAlign: 'right'
         }
-      }, React.createElement(Button, {
+      }, React__default.createElement(antd.Button, {
         style: {
           marginLeft: 8
         },
@@ -7188,7 +7196,7 @@ function (_Component) {
   }]);
 
   return CreateViewForm;
-}(Component);
+}(React.Component);
 
 _defineProperty(CreateViewForm$1, "propTypes", {
   modalType: propTypes.string,
@@ -7209,7 +7217,7 @@ CreateViewForm$1.propTypes = {
   options: propTypes.object,
   handleSubmit: propTypes.func
 };
-CreateViewForm$1 = reduxForm({
+CreateViewForm$1 = reduxForm.reduxForm({
   form: 'createModel',
   validate: function validate(values, props) {
     var errors = {}; // if(!values.name) errors.name = 'Введите название';
@@ -7220,7 +7228,7 @@ CreateViewForm$1 = reduxForm({
     return errors;
   }
 })(CreateViewForm$1);
-CreateViewForm$1 = connect(function (state, props) {
+CreateViewForm$1 = reactRedux.connect(function (state, props) {
   var options = props.fields.reduce(function (acc, field) {
     if (state[field.optionsKey]) {
       acc[field.optionsKey] = state[field.optionsKey].data;
@@ -7386,9 +7394,9 @@ function (_Component) {
           titleEdit = _ref.titleEdit,
           fields = _ref.fields;
 
-      var Btn = ButtonComponent || Button; // viewMode
+      var Btn = ButtonComponent || antd.Button; // viewMode
 
-      if (isView && isModalOpen === modelName && objectModal.modalType === 'view') return React.createElement(ShowModelView, {
+      if (isView && isModalOpen === modelName && objectModal.modalType === 'view') return React__default.createElement(ShowModelView, {
         title: title || 'Создать',
         titleEdit: titleEdit || 'Редактировать',
         type: objectModal.modalType,
@@ -7397,7 +7405,7 @@ function (_Component) {
         initialValues: objectModal.initialValues ? updateShape(objectModal.initialValues) : initialModal || {},
         renderField: renderField
       });
-      if (isView && isModalOpen === modelName && !createDisabled) return React.createElement(CreateModelView, {
+      if (isView && isModalOpen === modelName && !createDisabled) return React__default.createElement(CreateModelView, {
         title: title || 'Создать',
         titleEdit: titleEdit || 'Редактировать',
         type: objectModal.modalType,
@@ -7407,7 +7415,7 @@ function (_Component) {
         initialValues: objectModal.initialValues ? updateShape(objectModal.initialValues) : initialModal || {},
         renderField: renderField
       });
-      return React.createElement("div", null, !createDisabled ? React.createElement(Btn, {
+      return React__default.createElement("div", null, !createDisabled ? React__default.createElement(Btn, {
         type: "primary",
         name: "createButton",
         onClick: function onClick() {
@@ -7416,7 +7424,7 @@ function (_Component) {
         style: _objectSpread2({}, btnStyle, {
           marginBottom: '20px'
         })
-      }, createButtonTitle) : null, React.createElement(CustomButtons, null), React.createElement(CrudView$1, {
+      }, createButtonTitle) : null, React__default.createElement(CustomButtons, null), React__default.createElement(CrudView$1, {
         modelName: modelName,
         url: crudRead,
         tableStyle: tableStyle,
@@ -7429,7 +7437,7 @@ function (_Component) {
         scrollX: scrollX,
         rowSelection: rowSelection,
         bordered: bordered
-      }), isModalOpen === modelName && !createDisabled ? React.createElement(CreateModel, {
+      }), isModalOpen === modelName && !createDisabled ? React__default.createElement(CreateModel, {
         title: title || 'Создать',
         titleEdit: titleEdit || 'Редактировать',
         modalType: objectModal.modalType,
@@ -7443,7 +7451,7 @@ function (_Component) {
   }]);
 
   return CrudFull;
-}(Component);
+}(React.Component);
 CrudFull.propTypes = {
   crudCreate: propTypes.string,
   crudRead: propTypes.string.isRequired,
@@ -7503,7 +7511,7 @@ CrudFull.defaultProps = {
   },
   uploadFilesSettings: null
 };
-var crudFull = connect(function (state) {
+var crudFull = reactRedux.connect(function (state) {
   return {
     objectModal: state.modelModalForm,
     isModalOpen: state.isOpenModelModal
@@ -7866,7 +7874,7 @@ function ringBuffer(limit, overflowAction) {
   var pushIndex = 0;
   var popIndex = 0;
 
-  var push$$1 = function push$$1(it) {
+  var push = function push(it) {
     arr[pushIndex] = it;
     pushIndex = (pushIndex + 1) % limit;
     length++;
@@ -7898,7 +7906,7 @@ function ringBuffer(limit, overflowAction) {
     },
     put: function put(it) {
       if (length < limit) {
-        push$$1(it);
+        push(it);
       } else {
         var doubledLimit;
 
@@ -7920,7 +7928,7 @@ function ringBuffer(limit, overflowAction) {
             popIndex = 0;
             arr.length = doubledLimit;
             limit = doubledLimit;
-            push$$1(it);
+            push(it);
             break;
 
           default: // DROP
@@ -8231,9 +8239,9 @@ function buildUrlSearch(params) {
   return res && start ? "?".concat(res) : res ? "&".concat(res) : '';
 }
 
-var createNotification = function createNotification(type, message$$1, description) {
-  notification[type]({
-    message: message$$1,
+var createNotification = function createNotification(type, message, description) {
+  antd.notification[type]({
+    message: message,
     description: description
   });
 };
@@ -8385,7 +8393,7 @@ function fetchCrudModelsSaga(action) {
           if (payload.filters) {
             Object.keys(payload.filters).forEach(function (key) {
               if (payload.filters[key] && payload.filters[key].constructor === Array) {
-                paramsArr.push(buildUrlSearchForArray(payload.filters[key], key));
+                paramsArr.push(smStringHelper.buildUrlSearchForArray(payload.filters[key], key));
               }
             });
           }
@@ -8396,7 +8404,7 @@ function fetchCrudModelsSaga(action) {
             return acc + start + delimiter + e;
           }, '');
           _context2.next = 20;
-          return put(request(_objectSpread2({}, action, {
+          return put(requestMiddleware.request(_objectSpread2({}, action, {
             method: 'GET',
             auth: true,
             url: "".concat(url).concat(paramsStr)
@@ -8462,7 +8470,7 @@ function fetchCrudFilterValuesSaga(action) {
       switch (_context4.prev = _context4.next) {
         case 0:
           _context4.next = 2;
-          return put(request(_objectSpread2({}, action, {
+          return put(requestMiddleware.request(_objectSpread2({}, action, {
             method: 'GET',
             auth: true,
             url: "".concat(action.payload.query)
@@ -8642,7 +8650,7 @@ function createModelSaga(action) {
           uploadedFiles = _context7.sent;
           form = submitShape(action.payload.form, uploadedFiles);
           _context7.next = 13;
-          return put(request(_objectSpread2({}, action, {
+          return put(requestMiddleware.request(_objectSpread2({}, action, {
             method: 'POST',
             auth: true,
             url: "".concat(action.payload.url),
@@ -8692,7 +8700,7 @@ function deleteModelSaga(action) {
       switch (_context9.prev = _context9.next) {
         case 0:
           _context9.next = 2;
-          return put(request(_objectSpread2({}, action, {
+          return put(requestMiddleware.request(_objectSpread2({}, action, {
             method: action.payload.action.method,
             //'POST',
             auth: true,
@@ -8714,7 +8722,7 @@ function restoreModelSaga(action) {
       switch (_context10.prev = _context10.next) {
         case 0:
           _context10.next = 2;
-          return put(request(_objectSpread2({}, action, {
+          return put(requestMiddleware.request(_objectSpread2({}, action, {
             method: 'POST',
             auth: true,
             url: "".concat(action.payload.url),
@@ -8751,7 +8759,7 @@ function changeModelSaga(action) {
         case 7:
           uploadedFiles = _context11.sent;
           _context11.next = 10;
-          return put(request(_objectSpread2({}, action, {
+          return put(requestMiddleware.request(_objectSpread2({}, action, {
             method: action.payload.action.method,
             //'POST',
             auth: true,
@@ -8773,7 +8781,7 @@ function fetchCrudChildrenSaga(action) {
       switch (_context12.prev = _context12.next) {
         case 0:
           _context12.next = 2;
-          return put(request(_objectSpread2({}, action, {
+          return put(requestMiddleware.request(_objectSpread2({}, action, {
             method: 'GET',
             auth: true,
             url: "".concat(action.payload.url),
@@ -8814,7 +8822,7 @@ function submitModelsModalFormFailSaga(action) {
         case 0:
           errors = reduceMessages(action.messages);
           _context14.next = 3;
-          return put(stopSubmit('createModel', errors));
+          return put(reduxForm.stopSubmit('createModel', errors));
 
         case 3:
           _context14.next = 5;
@@ -8833,7 +8841,7 @@ function fetchFileConfigSaga(action) {
       switch (_context15.prev = _context15.next) {
         case 0:
           _context15.next = 2;
-          return put(request(_objectSpread2({}, action, {
+          return put(requestMiddleware.request(_objectSpread2({}, action, {
             method: 'GET',
             auth: true,
             url: action.payload.url
@@ -8852,7 +8860,7 @@ function rootSaga() {
       switch (_context16.prev = _context16.next) {
         case 0:
           _context16.next = 2;
-          return all([takeEvery$1(actions.FETCH_CRUD_MODELS, fetchCrudModelsSaga), takeEvery$1(actions.FETCH_CRUD_MODELS + SUCCESS, fetchCrudModelsSuccessSaga), takeEvery$1(actions.FETCH_CRUD_FILTER_VALUES, fetchCrudFilterValuesSaga), takeEvery$1(actions.FETCH_CRUD_CHILDREN, fetchCrudChildrenSaga), takeEvery$1(actions.CREATE_MODEL, createModelSaga), takeEvery$1(actions.CREATE_MODEL + SUCCESS, closeModalSaga), takeEvery$1(actions.CREATE_MODEL + SUCCESS, updateModelsSaga), takeEvery$1(actions.CREATE_MODEL + SUCCESS, notifySaga), takeEvery$1(actions.CREATE_MODEL + ERROR, submitModelsModalFormFailSaga), takeEvery$1(actions.DELETE_MODEL, deleteModelSaga), takeEvery$1(actions.DELETE_MODEL + SUCCESS, updateModelsSaga), takeEvery$1(actions.DELETE_MODEL + SUCCESS, notifySaga), takeEvery$1(actions.DELETE_MODEL + ERROR, notifySaga), takeEvery$1(actions.RESTORE_MODEL, restoreModelSaga), takeEvery$1(actions.RESTORE_MODEL + SUCCESS, updateModelsSaga), takeEvery$1(actions.RESTORE_MODEL + SUCCESS, notifySaga), takeEvery$1(actions.RESTORE_MODEL + ERROR, notifySaga), takeEvery$1(actions.CHANGE_MODEL, changeModelSaga), takeEvery$1(actions.CHANGE_MODEL + SUCCESS, closeModalSaga), takeEvery$1(actions.CHANGE_MODEL + SUCCESS, updateModelsSaga), takeEvery$1(actions.CHANGE_MODEL + SUCCESS, notifySaga), takeEvery$1(actions.CHANGE_MODEL + ERROR, submitModelsModalFormFailSaga), takeEvery$1(actions.FETCH_FILE_CONFIG, fetchFileConfigSaga), fork(requestMiddleware)]);
+          return all([takeEvery$1(actions.FETCH_CRUD_MODELS, fetchCrudModelsSaga), takeEvery$1(actions.FETCH_CRUD_MODELS + SUCCESS, fetchCrudModelsSuccessSaga), takeEvery$1(actions.FETCH_CRUD_FILTER_VALUES, fetchCrudFilterValuesSaga), takeEvery$1(actions.FETCH_CRUD_CHILDREN, fetchCrudChildrenSaga), takeEvery$1(actions.CREATE_MODEL, createModelSaga), takeEvery$1(actions.CREATE_MODEL + SUCCESS, closeModalSaga), takeEvery$1(actions.CREATE_MODEL + SUCCESS, updateModelsSaga), takeEvery$1(actions.CREATE_MODEL + SUCCESS, notifySaga), takeEvery$1(actions.CREATE_MODEL + ERROR, submitModelsModalFormFailSaga), takeEvery$1(actions.DELETE_MODEL, deleteModelSaga), takeEvery$1(actions.DELETE_MODEL + SUCCESS, updateModelsSaga), takeEvery$1(actions.DELETE_MODEL + SUCCESS, notifySaga), takeEvery$1(actions.DELETE_MODEL + ERROR, notifySaga), takeEvery$1(actions.RESTORE_MODEL, restoreModelSaga), takeEvery$1(actions.RESTORE_MODEL + SUCCESS, updateModelsSaga), takeEvery$1(actions.RESTORE_MODEL + SUCCESS, notifySaga), takeEvery$1(actions.RESTORE_MODEL + ERROR, notifySaga), takeEvery$1(actions.CHANGE_MODEL, changeModelSaga), takeEvery$1(actions.CHANGE_MODEL + SUCCESS, closeModalSaga), takeEvery$1(actions.CHANGE_MODEL + SUCCESS, updateModelsSaga), takeEvery$1(actions.CHANGE_MODEL + SUCCESS, notifySaga), takeEvery$1(actions.CHANGE_MODEL + ERROR, submitModelsModalFormFailSaga), takeEvery$1(actions.FETCH_FILE_CONFIG, fetchFileConfigSaga), fork(requestMiddleware__default)]);
 
         case 2:
         case "end":
@@ -8993,4 +9001,11 @@ var CrudView$2 = CrudView$1;
 var CrudFull$1 = crudFull;
 var CrudUploader$1 = Uploader$2;
 
-export { reducer, saga, updateModel, requestSaga$1 as requestSaga, actions$1 as actions, CrudView$2 as CrudView, CrudFull$1 as CrudFull, CrudUploader$1 as CrudUploader };
+exports.reducer = reducer;
+exports.saga = saga;
+exports.updateModel = updateModel;
+exports.requestSaga = requestSaga$1;
+exports.actions = actions$1;
+exports.CrudView = CrudView$2;
+exports.CrudFull = CrudFull$1;
+exports.CrudUploader = CrudUploader$1;

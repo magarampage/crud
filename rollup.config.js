@@ -14,7 +14,7 @@ export default {
 	output: [
 		{
 			file: 'dist/index.js',
-			format: 'es',
+			format: 'cjs',
 		}
 	],
 	// All the used libs needs to be here
@@ -42,18 +42,21 @@ export default {
 		'react-router',
 		'react-router-dom',
 		'react-rte',
+		'react-select',
+		'react-select-virtualized',
 		'react-slick',
+		'react-virtualized',
 		'redux',
 		'redux-form',
-		'redux-thunk',
-		'redux-saga',
-		'styled-components',
 		'redux-mock-store',
+		'redux-saga',
+		'redux-thunk',
 		'regenerator-runtime',
 		'rollup-plugin-image',
 		'rollup-plugin-uglify',
 		'sm-redux-saga-request',
-		'sm-string-helper'
+		'sm-string-helper',
+		'styled-components'
 	],
 	plugins: [
 		resolve(),

@@ -1,4 +1,4 @@
-import { CrudFull } from '../../src';
+import { CrudFull } from '../../dist';
 
 import React, { useState, useEffect } from 'react'
 import { getUrlParameters } from '../../src/helpers/urlHelpers'
